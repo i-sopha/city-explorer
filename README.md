@@ -44,6 +44,12 @@ Collaborated with accountability partners:
 
 - Kao Saelor
 
+- Coriana Williams
+
+- Heather Holcomb
+
+- Donna Ada
+
 ---
 
 ## Asynchronous code, and APIs
