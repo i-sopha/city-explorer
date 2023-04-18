@@ -38,7 +38,13 @@ Date / Time - Description
 
 ## Credit and Collaborations
 
-Collaborated with accountability partners:
+Collaborated with:
+
+- TA's
+
+- Heather Holcomb
+
+- Donna Ada
 
 - Kenya Womack
 
@@ -46,21 +52,17 @@ Collaborated with accountability partners:
 
 - Coriana Williams
 
-- Heather Holcomb
-
-- Donna Ada
-
 ---
 
 ## Asynchronous code, and APIs
 
-Estimate of time needed to complete: 5
+Estimate of time needed to complete: 5 hrs
 
-Start time: 2
+Start time: 2 hrs
 
-Finish time:
+Finish time: 8 hrs
 
-Actual time needed to complete:
+Actual time needed to complete: 6 hrs
 
 ## Custom Servers with Node and Express
 
