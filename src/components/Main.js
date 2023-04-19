@@ -37,9 +37,9 @@ class Main extends React.Component {
       let mapResponse = await axios.get(map)
       this.setState({ map: mapResponse.config.url })
 
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}&searchQuery=${this.state.city}`;
-      let weatherData = await axios.get(weatherUrl);
-      this.setState({ forecasts: weatherData.data, showWeather: true, error: false });
+      // let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}&searchQuery=${this.state.city}`;
+      // let weatherData = await axios.get(weatherUrl);
+      // this.setState({ forecasts: weatherData.data, showWeather: true, error: false });
   
       console.log(cityData.data[0])
       this.setState({
@@ -54,6 +54,31 @@ class Main extends React.Component {
       })
     }
   }
+
+  getWeatherData = async (event) => {
+    event.preventDefault();
+
+    try {
+        let serverUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.cityName}`
+
+        console.log('this is the url', serverUrl);
+        let serverData = await axios.get(serverUrl)
+        console.log(serverData)
+
+        this.setState({
+            weatherData: serverData.data,
+            dateData: serverData.data,
+            showWeather: true,
+        })
+        console.log('this is the serverdata.data', serverData.data);
+
+    } catch (error) {
+        console.log(error.message);
+        this.setState({
+            showWeather: false
+        })
+    }
+}
   
 
   render() {
