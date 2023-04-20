@@ -1,50 +1,21 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Component } from 'react';
 
-class Weather extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
-        const { forecasts } = this.props;
-        return (
-            <div>
-                {forecasts.map((forecast, index) => (
-                    <Card key={`forecast-${index}`} style={{ marginBottom: '1rem' }}>
-                        <Card.Header>
-                            {forecast.date}
-                            <Button
-                                variant='link'
-                                onClick={() =>
-                                    this.setState((prevState) => ({
-                                        [index]: !prevState[index],
-                                    }))
-                                }
-                                style={{ marginLeft: '1rem' }}
-                            >
-                                +
-                            </Button>
-                        </Card.Header>
-                        {this.state[index] && (
-                            <Card.Body>
-                                <Card.Text>
-                                    Description: {forecast.description}
-                                </Card.Text>
-                                <Card.Text>
-                                    High Temperature: {forecast.maxTemp} °F
-                                </Card.Text>
-                                <Card.Text>
-                                    Low Temperature: {forecast.minTemp} °F
-                                </Card.Text>
-                            </Card.Body>
-                        )}
-                    </Card>
-                ))}
-            </div>
-        );
-    }
+class Weather extends Component {
+  render() {
+    return (
+        
+        <>
+            {
+                this.props.weatherData.map((forecast, idx) => {
+                    return <p key={idx}>Date: {forecast.date} Forecast: {forecast.description}</p>
+                })
+            }
+            {/* <p>{this.props.dateData} {this.props.weatherData}.</p> */}
+        </>
+          
+    )
 }
+}
+
 
 export default Weather;

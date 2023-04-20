@@ -1,19 +1,26 @@
-import React from 'react';
+import { Component } from 'react';
+import { Carousel } from 'react-bootstrap';
 
-class Movies extends React.Component {
+class Movies extends Component {
   render() {
     return (
-      <div className='movie-list'>
-        {this.props.movies.length && this.props.movies.map((movie, idx) => {
-          return (
-            <div className='movie-details' key={idx}>
-              <h2>{movie.title}</h2>
-              <img src={`${movie.backdrop_path}`} alt='movie poster'/>
-              <p>Overview: {movie.title}</p>
-            </div>
-          )
-        })}
-      </div>
+      <Carousel interval="3000">
+        {this.props.movieData.map((obj, idx) => (
+          <Carousel.Item key={idx}>
+            <img
+              className="d-block w-100"
+              src={`https://image.tmdb.org/t/p/w500${obj.imgURL}`}
+              alt={obj.title}
+              // style={{ maxHeight: '500px', objectFit: 'contain' }}
+            />
+            <Carousel.Caption>
+              <h2>{obj.title}</h2>
+              <p>{obj.overview}</p>
+            </Carousel.Caption>
+
+          </Carousel.Item>
+        ))}
+      </Carousel>
     )
   }
 }
