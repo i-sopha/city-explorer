@@ -32,7 +32,8 @@ class Weather extends React.Component {
                                 <Card.Text>
                                     Description: {forecast.description}
                                 </Card.Text>
-                                <Card.Text>\n                                    High Temperature: {forecast.maxTemp} °F
+                                <Card.Text>
+                                    High Temperature: {forecast.maxTemp} °F
                                 </Card.Text>
                                 <Card.Text>
                                     Low Temperature: {forecast.minTemp} °F

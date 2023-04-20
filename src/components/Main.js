@@ -4,6 +4,7 @@ import { Alert } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
 import Weather from './Weather';
+import Movies from './Movies';
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,12 +16,13 @@ class Main extends React.Component {
       error: false,
       errorMsg: '',
       forecasts: [],
-      showWeather: false
+      showWeather: false,
+      moviesArr: []
     }
   }
 
 
-  handleCityInput = (ev) =>{
+  handleCityInput = (ev) => {
     this.setState({
       city: ev.target.value
     })
@@ -32,22 +34,20 @@ class Main extends React.Component {
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATION_IQ_API_KEY}&q=${this.state.city}&format=json`
       let cityData = await axios.get(url)
-  
+
+      await this.getMovies();
+
       let map = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_IQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=14&size=500x500`;
       let mapResponse = await axios.get(map)
       this.setState({ map: mapResponse.config.url })
 
-      // let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}&searchQuery=${this.state.city}`;
-      // let weatherData = await axios.get(weatherUrl);
-      // this.setState({ forecasts: weatherData.data, showWeather: true, error: false });
-  
       console.log(cityData.data[0])
       this.setState({
         cityData: cityData.data[0],
         error: false
       })
-  
-    } catch(error){
+
+    } catch (error) {
       this.setState({
         error: true,
         errorMsg: error.message
@@ -59,27 +59,43 @@ class Main extends React.Component {
     event.preventDefault();
 
     try {
-        let serverUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.cityName}`
 
-        console.log('this is the url', serverUrl);
-        let serverData = await axios.get(serverUrl)
-        console.log(serverData)
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}&searchQuery=${this.state.city}`;
 
-        this.setState({
-            weatherData: serverData.data,
-            dateData: serverData.data,
-            showWeather: true,
-        })
-        console.log('this is the serverdata.data', serverData.data);
+      let weatherData = await axios.get(weatherUrl);
+      this.setState({ forecasts: weatherData.data, showWeather: true, error: false });
+
+      let serverUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`
+
+      console.log('this is the url', serverUrl);
+      let serverData = await axios.get(serverUrl)
+      console.log(serverData)
+
+      this.setState({
+        forecasts: serverData.data,
+        showWeather: true,
+      })
 
     } catch (error) {
-        console.log(error.message);
-        this.setState({
-            showWeather: false
-        })
+      console.log(error.message);
+      this.setState({
+        showWeather: false
+      })
     }
-}
-  
+  }
+
+  getMovies = async () => {
+    try {
+      const MOVIES = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.moviesArr}`;
+      const movieResponse = await axios.get(MOVIES);
+
+      this.setState({ moviesArr: movieResponse.data })
+
+    } catch (error) {
+      console.error(error);
+      console.log(this.getMovies);
+    }
+  }
 
   render() {
     return (
@@ -87,18 +103,18 @@ class Main extends React.Component {
         <div className="center-container">
           <form onSubmit={this.getCityData}>
             <label> Enter in a City name: </label>
-              <input type="text" onInput={this.handleCityInput}/>
+            <input type="text" onInput={this.handleCityInput} />
             <button type="submit">Explore!</button>
           </form>
 
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             {
               this.state.error
-              ? <Alert variant="danger"><p>{this.state.errorMsg}</p></Alert>
-              : <p>{this.state.cityData.display_name}</p>
+                ? <Alert variant="danger\"><p>{this.state.errorMsg}</p></Alert>
+                : <p>{this.state.cityData.display_name}</p>
             }
           </div>
-       
+
           <div style={{ display: 'flex', justifyContent: 'center' }}>
 
             <Card style={{ maxWidth: '500px', margin: '10px' }}>
@@ -114,13 +130,17 @@ class Main extends React.Component {
             </Card>
 
           </div>
-        
-        
+
+
           <Image src={this.state.map} roundedCircle></Image>
+
+          {this.state.showWeather && <Weather forecasts={this.state.forecasts} />}
+
+          <Movies movies={this.state.moviesArr} searchQuery={this.state.searchQuery} />
 
         </div>
 
-        {this.state.showWeather && <Weather forecasts={this.state.forecasts} />}
+
 
       </>
     )
