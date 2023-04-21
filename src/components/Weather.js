@@ -1,21 +1,16 @@
-import { Component } from 'react';
+import React from 'react';
+import DailyWeather from './DailyWeather.js';
 
-class Weather extends Component {
-  render() {
+class Weather extends React.Component {
+  render () {
     return (
-        
-        <>
-            {
-                this.props.weatherData.map((forecast, idx) => {
-                    return <p key={idx}>Date: {forecast.date} Forecast: {forecast.description}</p>
-                })
-            }
-            {/* <p>{this.props.dateData} {this.props.weatherData}.</p> */}
-        </>
-          
+      <div className='weather-forecast'>
+        {this.props.forecast.map( (weather, idx) => {
+          return <DailyWeather key={idx} weather={weather} />
+        })}
+      </div>
     )
+  }
 }
-}
-
 
 export default Weather;

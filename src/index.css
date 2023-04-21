@@ -17,11 +17,11 @@ code {
 }
 
 body {
-  background-image: url('./components/imgs/background1.jpg');
+  background-image: url('./components/imgs/background3.jpg');
   background-size: cover;
 }
 
-footer {
+/* footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -30,7 +30,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 h1 {
   font-size: 100px!important;
@@ -38,7 +38,11 @@ h1 {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
-form {
-  margin-top: 20px;
-  margin-bottom: 20px;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
